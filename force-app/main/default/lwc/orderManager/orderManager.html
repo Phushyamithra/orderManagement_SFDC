@@ -1,0 +1,48 @@
+<template>
+    <lightning-card
+        icon-name="standard:orders"
+        title="Marketplace Orders Hub">
+
+        <lightning-button 
+            label="Refresh Data" 
+            slot="actions" 
+            onclick={handleRefresh}
+            icon-name="utility:refresh">
+        </lightning-button>
+        <div class="slds-p-around_medium">
+
+            <template if:true={orders}>
+                <lightning-layout multiple-rows="true">
+                    <template for:each={orders} for:item="order">
+                        <lightning-layout-item
+                            key={order.Id}
+                            size="12"
+                            padding="around-small">
+                            
+                            <div class="slds-box slds-m-bottom_small">
+                                <p><strong>Order Name:</strong> {order.Name}</p>
+                                <p><strong>Status:</strong> {order.Status__c}</p>
+                                <p><strong>Total:</strong> {order.Total_Amount__c}</p>
+                            </div>
+                            <div class="slds-m-top_small slds-p-left_medium">
+                                <p><strong>Line Items:</strong></p>
+                                <template for:each={order.Order_Line_Items__r} for:item="item">
+                                    <p key={item.Id}>
+                                        - {item.Name} (Qty: {item.Quantity__c})
+                                    </p>
+                                </template>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </template>
+
+            <template if:true={errors}>
+                <p class="slds-text-color_error">
+                    Error loading orders: {errors.message}
+                </p>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>
