@@ -25,4 +25,10 @@ export default class OrderManager extends LightningElement {
         // Refresh the wired data to get the latest orders and line items
         refreshApex(this.wiredOrdersResult);
     }
+
+    selectedOrder;
+    handleOrderSelect(event) {
+        const orderId = event.target.value;
+        this.selectedOrder = this.orders.find(order => order.Id === orderId);
+    }
 }
